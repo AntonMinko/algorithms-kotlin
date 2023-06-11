@@ -1,9 +1,7 @@
 package benchmarks
 
-import kotlin.random.Random
 import kotlinx.benchmark.Scope
 import org.openjdk.jmh.annotations.Benchmark
-import org.openjdk.jmh.annotations.Fork
 import org.openjdk.jmh.annotations.Measurement
 import org.openjdk.jmh.annotations.Setup
 import org.openjdk.jmh.annotations.State
@@ -23,7 +21,7 @@ open class SortBenchmark {
 
     @Setup
     fun setup() {
-        testArrays = File(path).deserializeToIntArrays()
+        testArrays = File(path).deserializeToIntArrays().toList()
         testArray = arrayOf(7,9,2,1,5,10,8,3,4,6).toIntArray()
     }
 
