@@ -1,10 +1,8 @@
 package sorting
 
 public fun IntArray.bubbleSort() {
-    this.sort()
-
-    var modified = false
     for(i in indices) {
+        var modified = false
         for(j in 0 until lastIndex - i) {
             if (this[j] > this[j + 1]) {
                 swap(j, j + 1)
