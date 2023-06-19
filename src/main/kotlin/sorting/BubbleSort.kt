@@ -1,5 +1,7 @@
 package sorting
 
+import utils.swap
+
 public fun IntArray.bubbleSort() {
     for(i in indices) {
         var modified = false
@@ -11,8 +13,4 @@ public fun IntArray.bubbleSort() {
         }
         if (!modified) return
     }
-}
-
-private fun IntArray.swap(i: Int, j: Int) {
-    this[i] = this[j].also { this[j] = this[i] }
 }

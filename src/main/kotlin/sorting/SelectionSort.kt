@@ -1,5 +1,7 @@
 package sorting
 
+import utils.swap
+
 public fun IntArray.selectionSort() {
     for(i in 0..lastIndex-1) {
         var minJ = i
@@ -8,8 +10,4 @@ public fun IntArray.selectionSort() {
         }
         if (minJ != i) swap(i, minJ)
     }
-}
-
-private fun IntArray.swap(i: Int, j: Int) {
-    this[i] = this[j].also { this[j] = this[i] }
 }
