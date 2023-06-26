@@ -9,6 +9,7 @@ import org.openjdk.jmh.annotations.State
 import org.openjdk.jmh.annotations.Warmup
 import sorting.bubbleSort
 import sorting.insertionSort
+import sorting.mergeSort
 import sorting.selectionSort
 import utils.deserializeToIntArrays
 import java.io.File
@@ -40,6 +41,11 @@ open class SortBenchmark {
     @Benchmark
     fun insertionSortBenchmark() {
         testArrays.forEach { it.insertionSort() }
+    }
+
+    @Benchmark
+    fun mergeSortBenchmark() {
+        testArrays.forEach { it.mergeSort() }
     }
 
     @Benchmark

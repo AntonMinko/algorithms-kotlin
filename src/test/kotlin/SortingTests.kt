@@ -2,6 +2,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeSorted
 import sorting.bubbleSort
 import sorting.insertionSort
+import sorting.mergeSort
 import sorting.selectionSort
 import utils.deserializeToIntArrays
 import java.io.File
@@ -40,6 +41,18 @@ internal class SortingTest : FunSpec({
         testArrays.forEach { arr ->
             test("Insertion sort ${arr.size}") {
                 arr.insertionSort()
+
+                arr.toList().shouldBeSorted()
+            }
+        }
+    }
+
+    context("Merge sort") {
+        testArrays = File(path).deserializeToIntArrays().take(500).toList()
+
+        testArrays.forEach { arr ->
+            test("Merge sort ${arr.size}") {
+                arr.mergeSort()
 
                 arr.toList().shouldBeSorted()
             }
