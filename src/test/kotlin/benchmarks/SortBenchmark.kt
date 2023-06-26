@@ -8,6 +8,7 @@ import org.openjdk.jmh.annotations.Setup
 import org.openjdk.jmh.annotations.State
 import org.openjdk.jmh.annotations.Warmup
 import sorting.bubbleSort
+import sorting.insertionSort
 import sorting.selectionSort
 import utils.deserializeToIntArrays
 import java.io.File
@@ -20,12 +21,10 @@ open class SortBenchmark {
     private val path = "./src/test/resources/testArrays.txt"
     private val testSuite = File(path).deserializeToIntArrays().toList()
     private lateinit var testArrays: List<IntArray>
-    //private lateinit var testArray: IntArray
 
     @Setup(Level.Invocation)
     fun setup() {
         testArrays = testSuite.map { it.clone() }
-        //testArray = arrayOf(7,9,2,1,5,10,8,3,4,6).toIntArray()
     }
 
     @Benchmark
@@ -36,6 +35,11 @@ open class SortBenchmark {
     @Benchmark
     fun selectionSortBenchmark() {
         testArrays.forEach { it.selectionSort() }
+    }
+
+    @Benchmark
+    fun insertionSortBenchmark() {
+        testArrays.forEach { it.insertionSort() }
     }
 
     @Benchmark
