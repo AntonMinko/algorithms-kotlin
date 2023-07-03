@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 @State(Scope.Benchmark)
 @Warmup(iterations = 1)
-@Measurement(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 open class SortBenchmark {
     private val path = "./src/test/resources/testArrays.txt"
     private val testSuite = File(path).deserializeToIntArrays().toList()
@@ -46,9 +46,21 @@ open class SortBenchmark {
     }
 
     @Benchmark
-    fun radixSortBenchmark() {
-        testArrays.forEach { it.radixSort() }
+    fun radixSortBenchmark10() {
+        testArrays.forEach { it.radixSort(base = 10) }
     }
+
+    @Benchmark
+    fun radixSortBenchmark16() {
+        testArrays.forEach { it.radixSort(base = 16) }
+    }
+
+
+    @Benchmark
+    fun radixSortBenchmark256() {
+        testArrays.forEach { it.radixSort(base = 256) }
+    }
+
 
     @Benchmark
     fun kotlinSortBenchmark() {
