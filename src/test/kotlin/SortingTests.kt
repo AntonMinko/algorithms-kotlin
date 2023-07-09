@@ -57,13 +57,37 @@ internal class SortingTest : FunSpec({
     }
 
     context("Radix sort") {
-        testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        beforeContainer {
+            testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        }
 
-        testArrays.forEach { arr ->
-            test("Radix sort ${arr.size}") {
-                arr.radixSort()
+        context("Base 10") {
+            testArrays.forEach { arr ->
+                test("Radix sort ${arr.size}") {
+                    arr.radixSort(base = 10)
 
-                arr.toList().shouldBeSorted()
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Base 16") {
+            testArrays.forEach { arr ->
+                test("Radix sort ${arr.size}") {
+                    arr.radixSort(base = 16)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Base 256") {
+            testArrays.forEach { arr ->
+                test("Radix sort ${arr.size}") {
+                    arr.radixSort(base = 256)
+
+                    arr.toList().shouldBeSorted()
+                }
             }
         }
     }

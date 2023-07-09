@@ -6,7 +6,7 @@ public fun IntArray.radixSort(base: Int = 10) {
     positiveRadixSort(this.toList(), base).toIntArray().copyInto(this)
 }
 
-private fun positiveRadixSort(unordered: List<Int>, base: Int = 10): List<Int> {
+private fun positiveRadixSort(unordered: List<Int>, base: Int): List<Int> {
     var list = unordered
     val digits = MutableList(base) { mutableListOf<Int>() }
 
@@ -29,5 +29,14 @@ private fun positiveRadixSort(unordered: List<Int>, base: Int = 10): List<Int> {
         step *= base
     }
 
-    return list
+    for(el in list) {
+        if (el < 0) {
+            digits[0].add(el)
+        }
+        else {
+            digits[1].add(el)
+        }
+    }
+
+    return digits.flatten()
 }
