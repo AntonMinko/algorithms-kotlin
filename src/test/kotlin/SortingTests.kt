@@ -92,4 +92,19 @@ internal class SortingTest : FunSpec({
         }
     }
 
+    context("Quick sort") {
+        beforeContainer {
+            testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        }
+
+        context("Extra memory") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Extra memory ${arr.size}") {
+                    arr.quickSort()
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+    }
 })
