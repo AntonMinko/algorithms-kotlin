@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 @State(Scope.Benchmark)
 @Warmup(iterations = 1)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS)
 open class SortBenchmark {
     private val path = "./src/test/resources/testArrays.txt"
     private val testSuite = File(path).deserializeToIntArrays().toList()
@@ -26,44 +26,58 @@ open class SortBenchmark {
     }
 
     @Benchmark
-    fun bubbleSortBenchmark() {
+    fun bubbleSort() {
         testArrays.forEach { it.bubbleSort() }
     }
 
     @Benchmark
-    fun selectionSortBenchmark() {
+    fun selectionSort() {
         testArrays.forEach { it.selectionSort() }
     }
 
     @Benchmark
-    fun insertionSortBenchmark() {
+    fun insertionSort() {
         testArrays.forEach { it.insertionSort() }
     }
 
     @Benchmark
-    fun mergeSortBenchmark() {
+    fun mergeSort() {
         testArrays.forEach { it.mergeSort() }
     }
 
     @Benchmark
-    fun radixSortBenchmark10() {
+    fun radixSort10() {
         testArrays.forEach { it.radixSort(base = 10) }
     }
 
     @Benchmark
-    fun radixSortBenchmark16() {
+    fun radixSort16() {
         testArrays.forEach { it.radixSort(base = 16) }
     }
 
 
     @Benchmark
-    fun radixSortBenchmark256() {
+    fun radixSort256() {
         testArrays.forEach { it.radixSort(base = 256) }
     }
 
+    @Benchmark
+    fun quickSortExternal() {
+        testArrays.forEach { it.quickSort(Strategy.EXTERNAL) }
+    }
 
     @Benchmark
-    fun kotlinSortBenchmark() {
+    fun quickSortLumoto() {
+        testArrays.forEach { it.quickSort(Strategy.LUMOTO) }
+    }
+
+    @Benchmark
+    fun quickSortHoare() {
+        testArrays.forEach { it.quickSort(Strategy.HOARE) }
+    }
+
+    @Benchmark
+    fun kotlinBuiltInSort() {
         testArrays.forEach { it.sort() }
         //testArray.sort()
     }
