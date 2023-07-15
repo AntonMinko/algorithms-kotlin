@@ -72,6 +72,16 @@ open class SortBenchmark {
     }
 
     @Benchmark
+    fun quickSortLumotoMedian() {
+        testArrays.forEach { it.quickSort(Strategy.LUMOTO_MEDIAN) }
+    }
+
+    @Benchmark
+    fun quickSortLumotoMedianDuplicates() {
+        testArrays.forEach { it.quickSort(Strategy.LUMOTO_MEDIAN_DUPLICATES) }
+    }
+
+    @Benchmark
     fun quickSortHoare() {
         testArrays.forEach { it.quickSort(Strategy.HOARE) }
     }

@@ -100,7 +100,47 @@ internal class SortingTest : FunSpec({
         context("Extra memory") {
             testArrays.forEach { arr ->
                 test("Quick sort. Extra memory ${arr.size}") {
-                    arr.quickSort()
+                    arr.quickSort(Strategy.EXTERNAL)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Lumoto") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Lumoto ${arr.size}") {
+                    arr.quickSort(Strategy.LUMOTO)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Lumoto with median pivot") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Lumoto with median pivot ${arr.size}") {
+                    arr.quickSort(Strategy.LUMOTO_MEDIAN)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Lumoto with median pivot point and duplicates") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Lumoto with median pivot and duplicates ${arr.size}") {
+                    arr.quickSort(Strategy.LUMOTO_MEDIAN_DUPLICATES)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Hoare") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Hoare ${arr.size}") {
+                    arr.quickSort(Strategy.HOARE)
 
                     arr.toList().shouldBeSorted()
                 }
