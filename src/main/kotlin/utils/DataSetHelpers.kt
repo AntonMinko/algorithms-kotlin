@@ -5,9 +5,11 @@ import java.io.File
 
 fun generateArrays(min: Int, max: Int, step: Int) = sequence {
     for(n in min..max step step) {
-        yield(IntArray(n) { Random.nextInt(-n, n) })
+        yield(generateArray(n, -n, n))
     }
 }
+
+fun generateArray(size: Int, min: Int, max: Int) = IntArray(size) { Random.nextInt(min, max) }
 
 fun Sequence<IntArray>.serializeTo(path: String) {
     File(path).delete()

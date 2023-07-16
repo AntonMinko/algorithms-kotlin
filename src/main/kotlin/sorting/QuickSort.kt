@@ -4,6 +4,7 @@ import utils.swap
 
 enum class Strategy {
     EXTERNAL,
+    EXTERNAL_EFFICIENT,
     LUMOTO,
     LUMOTO_MEDIAN,
     LUMOTO_MEDIAN_DUPLICATES,
@@ -12,6 +13,7 @@ enum class Strategy {
 public fun IntArray.quickSort(strategy: Strategy) {
     when(strategy) {
         Strategy.EXTERNAL -> this.toList().quickSortExternal().toIntArray().copyInto(this)
+        Strategy.EXTERNAL_EFFICIENT -> this.toList().quickSortExternalEfficient().toIntArray().copyInto(this)
         Strategy.LUMOTO -> quickSortLumoto()
         Strategy.LUMOTO_MEDIAN -> quickSortLumotoMedian()
         Strategy.LUMOTO_MEDIAN_DUPLICATES -> quickSortLumotoMedianDuplicates()
@@ -27,6 +29,32 @@ private fun List<Int>.quickSortExternal(): List<Int> {
     val left = this.filter { it < pivot }
     val mid = this.filter { it == pivot }
     val right = this.filter { it > pivot }
+
+    return left.quickSortExternal()
+        .plus(mid)
+        .plus(right.quickSortExternal())
+}
+
+private fun List<Int>.quickSortExternalEfficient(): List<Int> {
+    if (this.size < 2) return this
+
+    val left = mutableListOf<Int>()
+    val mid = mutableListOf<Int>()
+    val right = mutableListOf<Int>()
+
+    val pivotInd = size / 2
+    val pivot = this[pivotInd]
+    for(el in this) {
+        if (el < pivot) {
+            left.add(el)
+        }
+        else if (el == pivot) {
+            mid.add(el)
+        }
+        else {
+            right.add(el)
+        }
+    }
 
     return left.quickSortExternal()
         .plus(mid)

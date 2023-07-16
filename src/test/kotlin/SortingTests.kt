@@ -107,6 +107,16 @@ internal class SortingTest : FunSpec({
             }
         }
 
+        context("Extra memory Efficient") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Extra memory efficient ${arr.size}") {
+                    arr.quickSort(Strategy.EXTERNAL_EFFICIENT)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
         context("Lumoto") {
             testArrays.forEach { arr ->
                 test("Quick sort. Lumoto ${arr.size}") {
