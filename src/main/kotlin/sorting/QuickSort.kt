@@ -7,6 +7,7 @@ enum class Strategy {
     EXTERNAL_EFFICIENT,
     LUMOTO,
     LUMOTO_MEDIAN,
+    LUMOTO_INSERTION,
     LUMOTO_MEDIAN_DUPLICATES,
     HOARE
 }
@@ -16,6 +17,7 @@ public fun IntArray.quickSort(strategy: Strategy) {
         Strategy.EXTERNAL_EFFICIENT -> this.toList().quickSortExternalEfficient().toIntArray().copyInto(this)
         Strategy.LUMOTO -> quickSortLumoto()
         Strategy.LUMOTO_MEDIAN -> quickSortLumotoMedian()
+        Strategy.LUMOTO_INSERTION -> quickSortLumotoInsertion()
         Strategy.LUMOTO_MEDIAN_DUPLICATES -> quickSortLumotoMedianDuplicates()
         Strategy.HOARE -> quickSortHoare()
     }
@@ -93,6 +95,41 @@ private fun IntArray.quickSortLumotoMedian(low: Int = 0, high: Int = lastIndex) 
     quickSortLumotoMedian(i + 1, high)
 }
 
+private fun IntArray.insertionSort(low: Int = 0, high: Int) {
+    for(i in low + 1..high) {
+        for(j in i downTo low + 1) {
+            if (this[j] < this[j-1]) {
+                swap(j, j-1)
+            }
+            else {
+                break
+            }
+        }
+    }
+}
+
+private fun IntArray.quickSortLumotoInsertion(low: Int = 0, high: Int = lastIndex) {
+    if (low >= high) return
+
+    // Use insertion sort for short arrays. 15 chosen as optimal in benchmarks
+    if (high - low < 15) {
+        insertionSort(low, high)
+        return
+    }
+
+    val pivot = medianPivotSimple(low, high)
+    var i = low
+    for(j in low until high) {
+        if (this[j] <= pivot) {
+            swap(i, j)
+            i++
+        }
+    }
+    swap(i, high)
+    quickSortLumotoInsertion(low, i - 1)
+    quickSortLumotoInsertion(i + 1, high)
+}
+
 private fun IntArray.quickSortLumotoMedianDuplicates(low: Int = 0, high: Int = lastIndex) {
     if (low >= high) return
 
@@ -129,6 +166,20 @@ private inline fun IntArray.medianPivot(low: Int, high: Int): Int {
         swap(low, high)
     }
     if (this[mid] < this[high]) {
+        swap(mid, high)
+    }
+    return this[high]
+}
+
+private inline fun IntArray.medianPivotSimple(low: Int, high: Int): Int {
+    // move median value to this[high]
+    val mid = low + (high - low) / 2
+    if (this[low] >= this[mid] && this[low] <= this[high] ||
+        this[low] <= this[mid] && this[low] >= this[high]) {
+        swap(low, high)
+    }
+    else if (this[mid] >= this[low] && this[mid] <= this[high] ||
+        this[mid] <= this[low] && this[mid] >= this[high]) {
         swap(mid, high)
     }
     return this[high]

@@ -137,6 +137,16 @@ internal class SortingTest : FunSpec({
             }
         }
 
+        context("Lumoto with insertion sort") {
+            testArrays.forEach { arr ->
+                test("Quick sort. Lumoto with insertion sort ${arr.size}") {
+                    arr.quickSort(Strategy.LUMOTO_INSERTION)
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
         context("Lumoto with median pivot point and duplicates") {
             testArrays.forEach { arr ->
                 test("Quick sort. Lumoto with median pivot and duplicates ${arr.size}") {
