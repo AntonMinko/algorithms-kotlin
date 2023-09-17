@@ -1,16 +1,16 @@
 package sorting
 
-public fun IntArray.mergeSort() {
-    this.asList().mergeSort().toIntArray().copyInto(this)
+public fun IntArray.mergeSortBasic() {
+    this.asList().sort().toIntArray().copyInto(this)
     //this.asList().mergeSort().forEachIndexed { i, el -> this[i] = el }
 }
 
-private fun List<Int>.mergeSort(): List<Int> {
+private fun List<Int>.sort(): List<Int> {
     if (size < 2) return this
     if (size == 2 && this[0] < this[1]) return this
 
-    val left = this.subList(0, size / 2).mergeSort()
-    val right = this.subList(size / 2, size).mergeSort()
+    val left = this.subList(0, size / 2).sort()
+    val right = this.subList(size / 2, size).sort()
 
     return merge(left, right)
 }

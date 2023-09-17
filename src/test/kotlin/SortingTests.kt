@@ -45,13 +45,40 @@ internal class SortingTest : FunSpec({
     }
 
     context("Merge sort") {
-        testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        beforeContainer {
+            testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        }
 
-        testArrays.forEach { arr ->
-            test("Merge sort ${arr.size}") {
-                arr.mergeSort()
+        context("Basic TopDown") {
 
-                arr.toList().shouldBeSorted()
+            testArrays.forEach { arr ->
+                test("Merge sort ${arr.size}") {
+                    arr.mergeSortBasic()
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Optimized TopDown") {
+
+            testArrays.forEach { arr ->
+                test("Merge sort ${arr.size}") {
+                    arr.mergeSortTopDown()
+
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Bottom Up") {
+
+            testArrays.forEach { arr ->
+                test("Merge sort ${arr.size}") {
+                    arr.mergeSortBottomUp()
+
+                    arr.toList().shouldBeSorted()
+                }
             }
         }
     }
