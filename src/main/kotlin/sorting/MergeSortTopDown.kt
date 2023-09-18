@@ -1,6 +1,6 @@
 package sorting
 
-import utils.swap
+import utils.insertionSort
 
 public fun IntArray.mergeSortTopDown() {
     val aux = IntArray(size)
@@ -9,7 +9,7 @@ public fun IntArray.mergeSortTopDown() {
 
 private fun sort(arr: IntArray, aux: IntArray, low: Int, hi: Int) {
     if (hi - low <= 15) {
-        insertionSort(arr, low, hi)
+        arr.insertionSort(low, hi)
         return
     }
 
@@ -47,19 +47,6 @@ private fun merge(arr: IntArray, aux: IntArray, low: Int, mid: Int, hi: Int) {
         else {
             arr[i] = aux[l]
             l++
-        }
-    }
-}
-
-private fun insertionSort(arr: IntArray, low: Int, hi: Int) {
-    for(i in low + 1..hi) {
-        for(j in i downTo low + 1) {
-            if (arr[j] < arr[j-1]) {
-                arr.swap(j, j-1)
-            }
-            else {
-                break
-            }
         }
     }
 }

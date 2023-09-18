@@ -1,6 +1,6 @@
 package sorting
 
-import utils.swap
+import utils.insertionSort
 import kotlin.math.min
 
 public fun IntArray.mergeSortBottomUp() {
@@ -8,7 +8,7 @@ public fun IntArray.mergeSortBottomUp() {
 
     var i = 0
     while (i < size) {
-        insertionSort(this, i, min(i + 15, size - 1))
+        this.insertionSort(i, min(i + 15, size - 1))
         i += 16
     }
     i = 16
@@ -18,20 +18,6 @@ public fun IntArray.mergeSortBottomUp() {
         }
         i *= 2
     }
-}
-
-private fun sort(arr: IntArray, aux: IntArray, low: Int, hi: Int) {
-    if (hi - low < 15) {
-        insertionSort(arr, low, hi)
-        return
-    }
-
-    val mid = low + (hi - low) / 2
-
-    sort(arr, aux, low, mid)
-    sort(arr, aux, mid + 1, hi)
-
-    return merge(arr, aux, low, mid, hi)
 }
 
 private fun merge(arr: IntArray, aux: IntArray, low: Int, mid: Int, hi: Int) {
@@ -60,19 +46,6 @@ private fun merge(arr: IntArray, aux: IntArray, low: Int, mid: Int, hi: Int) {
         else {
             arr[i] = aux[l]
             l++
-        }
-    }
-}
-
-private fun insertionSort(arr: IntArray, low: Int, hi: Int) {
-    for(i in low + 1..hi) {
-        for(j in i downTo low + 1) {
-            if (arr[j] < arr[j-1]) {
-                arr.swap(j, j-1)
-            }
-            else {
-                break
-            }
         }
     }
 }

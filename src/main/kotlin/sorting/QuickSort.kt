@@ -1,6 +1,7 @@
 package sorting
 
 import utils.swap
+import utils.insertionSort
 
 enum class Strategy {
     EXTERNAL,
@@ -95,25 +96,12 @@ private fun IntArray.quickSortLumotoMedian(low: Int = 0, high: Int = lastIndex) 
     quickSortLumotoMedian(i + 1, high)
 }
 
-private fun IntArray.insertionSort(low: Int = 0, high: Int) {
-    for(i in low + 1..high) {
-        for(j in i downTo low + 1) {
-            if (this[j] < this[j-1]) {
-                swap(j, j-1)
-            }
-            else {
-                break
-            }
-        }
-    }
-}
-
 private fun IntArray.quickSortLumotoInsertion(low: Int = 0, high: Int = lastIndex) {
     if (low >= high) return
 
     // Use insertion sort for short arrays. 15 chosen as optimal in benchmarks
     if (high - low < 15) {
-        insertionSort(low, high)
+        this.insertionSort(low, high)
         return
     }
 
