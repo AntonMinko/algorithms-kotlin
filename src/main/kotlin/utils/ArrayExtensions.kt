@@ -10,14 +10,14 @@ inline fun IntArray.swap(i: Int, j: Int) {
 
 fun IntArray.insertionSort(low: Int, hi: Int) {
     for(i in low + 1..hi) {
-        for(j in i downTo low + 1) {
-            val cur = this[j]
-            if (this[j-1] > cur) {
-                this[j] = this[j-1]
-            }
-            else {
+        val cur = this[i]
+        for(j in i downTo low) {
+            if (j == low || this[j-1] <= cur) {
                 this[j] = cur
                 break
+            }
+            else {
+                this[j] = this[j-1]
             }
         }
     }

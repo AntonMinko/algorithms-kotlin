@@ -3,6 +3,7 @@ import io.kotest.matchers.collections.shouldBeSorted
 import sorting.*
 import utils.deserializeToIntArrays
 import java.io.File
+import kotlin.test.assertContentEquals
 
 internal class SortingTest : FunSpec({
     val path = "./src/test/resources/testArrays.txt"
@@ -33,13 +34,28 @@ internal class SortingTest : FunSpec({
     }
 
     context("Insertion sort") {
-        testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        beforeContainer {
+            testArrays = File(path).deserializeToIntArrays().take(500).toList()
+        }
 
-        testArrays.forEach { arr ->
-            test("Insertion sort ${arr.size}") {
-                arr.insertionSort()
+        context("Basic") {
+            testArrays.forEach { arr ->
+                test("Insertion sort basic ${arr.size}") {
+                    arr.insertionSort()
 
-                arr.toList().shouldBeSorted()
+                    arr.toList().shouldBeSorted()
+                }
+            }
+        }
+
+        context("Optimized") {
+            testArrays.forEach { arr ->
+                test("Insertion sort optimized ${arr.size}") {
+                    val expected = arr.sorted().toIntArray()
+                    arr.insertionSortOptimized()
+
+                    assertContentEquals(expected, arr)
+                }
             }
         }
     }

@@ -17,7 +17,7 @@ import kotlin.random.Random
 
 @State(Scope.Benchmark)
 @Warmup(iterations = 1)
-@Measurement(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS)
 open class SortBenchmark {
     private val path = "./src/test/resources/testArrays.txt"
     private val testSuite = File(path).deserializeToIntArrays().toList()
@@ -25,9 +25,9 @@ open class SortBenchmark {
 
     @Setup(Level.Invocation)
     fun setup() {
-        testArrays = testSuite.map { it.clone() }
-//        val size = 1_000_000
-//        testArrays = (1..1).map { generateArray(size, 0, size / 1000)
+        //testArrays = testSuite.map { it.clone() }
+        val size = 6_400_000
+        testArrays = (1..1).map { generateArray(size, 0, size * 2)
 //            .sortedArray()
 //            .also { arr ->
 //                (1..100).forEach {
@@ -36,7 +36,7 @@ open class SortBenchmark {
 //                    arr.swap(i, j)
 //                }
 //            }
-//        }
+        }
     }
 
     @Benchmark
@@ -55,8 +55,24 @@ open class SortBenchmark {
     }
 
     @Benchmark
-    fun mergeSort() {
-        testArrays.forEach { it.mergeSort() }
+    fun insertionSortOptimized() {
+        testArrays.forEach { it.insertionSortOptimized() }
+    }
+
+    @Benchmark
+    fun mergeSortBasic() {
+        testArrays.forEach { it.mergeSortBasic() }
+    }
+
+
+    @Benchmark
+    fun mergeSortTopDown() {
+        testArrays.forEach { it.mergeSortTopDown() }
+    }
+
+    @Benchmark
+    fun mergeSortBottomUp() {
+        testArrays.forEach { it.mergeSortBottomUp() }
     }
 
     @Benchmark
@@ -96,8 +112,8 @@ open class SortBenchmark {
     }
 
     @Benchmark
-    fun quickSortLumotoMedianDuplicates() {
-        testArrays.forEach { it.quickSort(Strategy.LUMOTO_MEDIAN_DUPLICATES) }
+    fun quickSortLumotoInsertion() {
+        testArrays.forEach { it.quickSort(Strategy.LUMOTO_INSERTION) }
     }
 
     @Benchmark
@@ -109,5 +125,4 @@ open class SortBenchmark {
     fun kotlinBuiltInSort() {
         testArrays.forEach { it.sort() }
     }
-
 }
